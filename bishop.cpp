@@ -19,6 +19,7 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 		//verifica que no se mueva a los lados ni verticalmente
 		return false;
 	}
+	// se agregó el booleano para controlar el movimiento del bishop 
 
 	bool sigue = true;	
 	if (abs(this->position.getY()-destiny.getY())==abs(this->position.getX()-destiny.getX())){
