@@ -39,18 +39,19 @@ int main(int argc, char const *argv[]){
 		if (turno % 2 == 1) {
 			while(!valid){//ciclo de validacion
 				cout<<"Turno de: "<<nombre1<<endl;
-				cout<<"Ingrese columna de la pieza que desea mover: ";
-				cin>>x;
-				x--;
-				cout<<"Ingrese fila de la pieza que desea mover: ";
+				// Ahora se indica que pide el usuario y se cambió el orden de como se pide
+				cout<<"Ingrese columna de la pieza que desea mover (Letra): ";
 				cin >> coordenada1;
-				y = charToInt(coordenada1);
-				cout<<"Ingrese columna a la desea mover la pieza: ";
-				cin>>x1;
-				x1--;
-				cout<<"Ingrese fila a la desea mover la pieza: : ";
+				x = charToInt(coordenada1);
+				cout<<"Ingrese fila de la pieza que desea mover(Número): ";
+				cin>>y;
+				y--;
+				cout<<"Ingrese columna a la desea mover la pieza (Letra): ";
 				cin >> coordenada2;
-				y1 = charToInt(coordenada2);
+				x1 = charToInt(coordenada2);
+				cout<<"Ingrese fila a la desea mover la pieza (Número): ";
+				cin>>y1;
+				y1--;
 				Position pos(x1,y1);
 				if (tablero[y][x]->getColor()=='B' && tablero[y][x] != NULL){//validacion de mover
 					if(tablero[y][x]->moveTo(tablero,pos))
@@ -65,19 +66,19 @@ int main(int argc, char const *argv[]){
 		}else{
 			while(!valid){//ciclo de validacion
 				cout<<"Turno de: "<<nombre2<<endl;
-				cout<<"Ingrese columna de la pieza que desea mover: ";
-				cin>>x;
-				x--;
-				cout<<"Ingrese fila de la pieza que desea mover: ";
+				// Se cambio de la misma manera el bloque de código de arriba
+				cout<<"Ingrese columna de la pieza que desea mover (Letra): ";
 				cin >> coordenada1;
-				y = charToInt(coordenada1);
-				cout<<"Ingrese columna a la desea mover la pieza: ";
-				cin>>x1;
-				x1--;
-				cout<<"Ingrese fila a la desea mover la pieza: : ";
+				x = charToInt(coordenada1);
+				cout<<"Ingrese fila de la pieza que desea mover(Número): ";
+				cin>>y;
+				y--;
+				cout<<"Ingrese columna a la desea mover la pieza (Letra): ";
 				cin >> coordenada2;
-				y1 = charToInt(coordenada2);
-
+				x1 = charToInt(coordenada2);
+				cout<<"Ingrese fila a la desea mover la pieza (Número): ";
+				cin>>y1;
+				y1--;
 				Position pos(x1,y1);
 				if (tablero[y][x]->getColor()=='N' && tablero[y][x] != NULL){//validacion de mover
 					if(tablero[y][x]->moveTo(tablero,pos))
@@ -85,7 +86,7 @@ int main(int argc, char const *argv[]){
 					else
 						valid = false;
 				}else{
-					cerr << "No se puede mover las piezas del jugador opuesto" << endl;
+					cerr << "No se puede mover las piezas del juagdor opuesto" << endl;
 				}
 			}
 		}
@@ -115,8 +116,16 @@ void destruirTablero(Piece*** tablero, int rows, int cols){
 	delete[] tablero;
 }
 void imprimir(Piece*** tablero){//imprimir tablero
+
+	/*EL juego se juega de manera en que las letras son las columas y los números son las filas*/
+	
 	char letras[] = "ABCDEFGH";
 	int numeros[] = {1,2,3,4,5,6,7,8};
+	//Se ponen las letras primero
+	for (int i = 0; i < 8; ++i)	{
+		cout << " " << letras[i] << " ";
+	}
+	cout << endl;
 	for (int i = 0; i < 8; ++i){
 		for (int j = 0; j < 8; ++j)	{
 			if(tablero[i][j] != NULL)
@@ -124,12 +133,10 @@ void imprimir(Piece*** tablero){//imprimir tablero
 			else
 				cout << "[ ]";
 		}
-		cout << letras[i] << endl;
+		//Se cambia las letras por números
+		cout << numeros[i] << endl;
 	}
-	for (int i = 0; i < 8; ++i)	{
-		cout << " " << numeros[i] << " ";
-	}
-	cout << endl;
+	
 }
 void chessInit(Piece*** tablero){//Inicializar tablero
 	//piezas blancas
@@ -172,39 +179,39 @@ void chessInit(Piece*** tablero){//Inicializar tablero
 int charToInt(char coordenada){
 	switch (coordenada){
 		case 'a':
-			return 0;
+		return 0;
 		case 'b':
-			return 1;
+		return 1;
 		case 'c':
-			return 2;
+		return 2;
 		case 'd':
-			return 3;
+		return 3;
 		case 'e':
-			return 4;
+		return 4;
 		case 'f':
-			return 5;
+		return 5;
 		case 'g':
-			return 6;
+		return 6;
 		case 'h':
-			return 7;
+		return 7;
 		case 'A':
-			return 0;
+		return 0;
 		case 'B':
-			return 1;
+		return 1;
 		case 'C':
-			return 2;
+		return 2;
 		case 'D':
-			return 3;
+		return 3;
 		case 'E':
-			return 4;
+		return 4;
 		case 'F':
-			return 5;
+		return 5;
 		case 'G':
-			return 6;
+		return 6;
 		case 'H':
-			return 7;
+		return 7;
 		default:
-			return -1;
+		return -1;
 	}
 }
 bool ganar(Piece*** tablero){
