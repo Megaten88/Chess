@@ -20,7 +20,7 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 		return false;
 	}
 
-
+	bool sigue = true;	
 	if (abs(this->position.getY()-destiny.getY())==abs(this->position.getX()-destiny.getX())){
 		if (this->getColor() == 'B'){
 			if(this->position.getY() > destiny.getY() && this->position.getX()>destiny.getX()){
@@ -28,17 +28,17 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 				contadorY=this->position.getY();
 				contadorX=this->position.getY();
 				
-
-				while(true){
+				 sigue = true;
+				while(sigue){
 					if (board[contadorY][contadorX] == NULL){
 						contadorY--;
 						contadorX--;
 
 					} else if (board[contadorY][contadorX]!=NULL && board[contadorY][contadorX]->getColor()=='B'){
-						return false;
+						sigue = false;
 					}
 					if(contadorX == destiny.getX() || contadorY==destiny.getY()){
-						break;
+						sigue = false;
 					}
 
 
@@ -52,18 +52,18 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 				contadorY=this->position.getY();
 				contadorX=this->position.getY();
 				
-
-				while(true){
+				 sigue = true;
+				while(sigue){
 					
 					if (board[contadorY][contadorX] == NULL){
 						contadorY--;
 						contadorX++;
 
 					} else if (board[contadorY][contadorX]!=NULL && board[contadorY][contadorX]->getColor()=='B'){
-						return false;
+						sigue = false;
 					}
 					if(contadorX == destiny.getX() || contadorY==destiny.getY()){
-						break;
+						sigue = false;
 					}
 				}
 				return true;
@@ -73,18 +73,18 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 				contadorY=this->position.getY();
 				contadorX=this->position.getY();
 				
-
-				while(true){
+				 sigue = true;
+				while(sigue){
 					
 					if (board[contadorY][contadorX] == NULL){
 						contadorY++;
 						contadorX--;
 
 					} else if (board[contadorY][contadorX]!=NULL && board[contadorY][contadorX]->getColor()=='B'){
-						return false;
+						sigue = false;
 					}
 					if(contadorX == destiny.getX() || contadorY==destiny.getY()){
-						break;
+						sigue = false;
 					}
 				}
 				return true;
@@ -94,18 +94,18 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 				contadorY=this->position.getY();
 				contadorX=this->position.getY();
 				
-
-				while(true){
+				 sigue = true;
+				while(sigue){
 					
 					if (board[contadorY][contadorX] == NULL){
 						contadorY++;
 						contadorX++;
 
 					} else if (board[contadorY][contadorX]!=NULL && board[contadorY][contadorX]->getColor()=='B'){
-						return false;
+						sigue = false;
 					}
 					if(contadorX == destiny.getX() || contadorY==destiny.getY()){
-						break;
+						sigue = false;
 					}
 
 				}
@@ -120,18 +120,18 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 				contadorX=this->position.getY();
 				
 
-
-				while(true){
+				 sigue = true;
+				while(sigue){
 					
 					if (board[contadorY][contadorX] == NULL){
 						contadorY--;
 						contadorX--;
 
 					} else if (board[contadorY][contadorX]!=NULL && board[contadorY][contadorX]->getColor()=='N'){
-						return false;
+						sigue = false;
 					}
 					if(contadorX == destiny.getX() || contadorY==destiny.getY()){
-						break;
+						sigue = false;
 					}
 
 				}
@@ -144,8 +144,8 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 				contadorY=this->position.getY();
 				contadorX=this->position.getY();
 
-				
-				while(true){
+				 sigue = true;
+				while(sigue){
 					
 					
 					if (board[contadorY][contadorX] == NULL){
@@ -153,10 +153,10 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 						contadorX++;
 
 					} else if (board[contadorY][contadorX]!=NULL && board[contadorY][contadorX]->getColor()=='N'){
-						return false;
+						sigue = false;
 					}
 					if(contadorX == destiny.getX() || contadorY==destiny.getY()){
-						break;
+						sigue = false;
 					}
 
 				}
@@ -169,18 +169,18 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 				contadorX=this->position.getY();
 
 				
-
-				while(true){
+				 sigue = true;
+				while(sigue){
 					
 					if (board[contadorY][contadorX] == NULL){
 						contadorY++;
 						contadorX--;
 
 					} else if (board[contadorY][contadorX]!=NULL && board[contadorY][contadorX]->getColor()=='N'){
-						return false;
+						sigue = false;
 					}
 					if(contadorX == destiny.getX() || contadorY==destiny.getY()){
-						break;
+						sigue = false;
 					}
 
 				}
@@ -192,18 +192,18 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 				contadorY=this->position.getY();
 				contadorX=this->position.getY();
 				
-
-				while(true){
+				 sigue = true;
+				while(sigue){
 					
 					if (board[contadorY][contadorX] == NULL){
 						contadorY++;
 						contadorX++;
 
 					} else if (board[contadorY][contadorX]!=NULL && board[contadorY][contadorX]->getColor()=='N'){
-						return false;
+						sigue = false;
 					}
 					if(contadorX == destiny.getX() || contadorY==destiny.getY()){
-						break;
+						sigue = false;
 					}
 
 				}
@@ -235,7 +235,7 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 
 				while (contadorV != destiny.getY() && contadorH != destiny.getX() ){
 					if ((contadorH>7 || contadorH<0) || (contadorV>7 || contadorV<0)){
-						return false;
+						sigue = false;
 					}
 					if (board[contadorV][contadorH]->getColor() == 'B' ){
 						return false;
@@ -396,7 +396,7 @@ bool Bishop::isValidMove(Piece***board, Position destiny){
 
 }
 
-bool Bishop::moveTo(Piece*** board, Position destiny){
+ bool Bishop::moveTo(Piece*** board, Position destiny){
 	if(isValidMove(board,destiny)){
 		board[position.getY()][position.getX()] = NULL;
 		position = destiny;

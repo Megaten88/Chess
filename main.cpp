@@ -8,9 +8,13 @@
 #include "bishop.hpp"
 #include "rook.hpp"
 #include "pawn.hpp"
+#include <fstream>
 
 using namespace std;
-
+//Protipo para guardar
+void escribirArchivo(Piece*** tablero);
+//Prototipo para cargar
+void cargarArchivo(Piece***& tablero);
 Piece*** crearTablero(int rows, int cols);
 void destruirTablero(Piece*** tablero, int rows, int cols);
 void imprimir(Piece*** tablero);
@@ -22,7 +26,6 @@ int main(int argc, char const *argv[]){
 	const int ROWS = 8;
 	const int COLS = 8;
 	Piece*** tablero = crearTablero(ROWS,COLS);
-
 	string nombre1,nombre2;
 	cout<<"Jugador1 ingrese su nombre: "<<endl;
 	cin>>nombre1;
@@ -52,14 +55,23 @@ int main(int argc, char const *argv[]){
 				cout<<"Ingrese fila a la desea mover la pieza (Número): ";
 				cin>>y1;
 				y1--;
-				Position pos(x1,y1);
-				if (tablero[y][x]->getColor()=='B' && tablero[y][x] != NULL){//validacion de mover
-					if(tablero[y][x]->moveTo(tablero,pos))
-						valid = true;//variable de validacion
-					else
-						valid = false;
+
+				// se agregó la validacion de las posiciones 
+				if(x>7 || y > 8 || x1 > 7 || y1 > 8 || x<0 || y<0 || x1<0 || y<0){
+					cerr<<"Ingresó una posición inválida"<<endl;
 				}else{
-					cerr << "No se puede mover las piezas del juagdor opuesto" << endl;
+					Position pos(x1,y1);
+					if (tablero[y][x]->getColor()=='B' && tablero[y][x] != NULL){//validacion de mover
+						if(tablero[y][x]->moveTo(tablero,pos)){
+							valid = true;//variable de validacion
+							escribirArchivo(tablero);
+						}
+						else{
+							valid = false;
+						}
+					}else{
+						cerr << "No se puede mover las piezas del juagdor opuesto" << endl;
+					}
 				}
 			}
 
@@ -79,14 +91,21 @@ int main(int argc, char const *argv[]){
 				cout<<"Ingrese fila a la desea mover la pieza (Número): ";
 				cin>>y1;
 				y1--;
-				Position pos(x1,y1);
-				if (tablero[y][x]->getColor()=='N' && tablero[y][x] != NULL){//validacion de mover
-					if(tablero[y][x]->moveTo(tablero,pos))
-						valid = true;//variable de validacion
-					else
-						valid = false;
+				// se agregó la validacion de las posiciones 
+				if(x>7 || y > 8 || x1 > 7 || y1 > 8 || x<0 || y<0 || x1<0 || y<0){
+					cerr<<"Ingresó una posición inválida."<<endl;
 				}else{
-					cerr << "No se puede mover las piezas del juagdor opuesto" << endl;
+					Position pos(x1,y1);
+					if (tablero[y][x]->getColor()=='N' && tablero[y][x] != NULL){//validacion de mover
+						if(tablero[y][x]->moveTo(tablero,pos)){
+							valid = true;//variable de validacion
+							escribirArchivo(tablero);
+						}else{
+							valid = false;
+						}
+					}else{
+						cerr << "No se puede mover las piezas del juagdor opuesto" << endl;
+					}
 				}
 			}
 		}
@@ -118,7 +137,7 @@ void destruirTablero(Piece*** tablero, int rows, int cols){
 void imprimir(Piece*** tablero){//imprimir tablero
 
 	/*EL juego se juega de manera en que las letras son las columas y los números son las filas*/
-	
+
 	char letras[] = "ABCDEFGH";
 	int numeros[] = {1,2,3,4,5,6,7,8};
 	//Se ponen las letras primero
@@ -229,4 +248,37 @@ bool ganar(Piece*** tablero){
 		return true;
 	}
 	return false;
+}
+
+//Métodos de escritura y lectura
+void escribirArchivo(Piece*** tablero){
+	try{
+		ofstream salida;
+		salida.open("Chess.chess", ios::out|ios::binary);
+		salida.write((char*)(&tablero), sizeof(tablero));
+		for (int i = 0; i < 8; ++i)
+		{
+			for (int j = 0; j < 8; ++j)
+			{
+				if (tablero[i][j] != NULL)
+				{
+					salida.write((char*)(&tablero[i][j]),sizeof(tablero[i][j]));
+				}
+			}
+		}
+		salida.close();
+	}catch(...){
+		cerr<< "Ocurrió un error"<<endl;
+	}
+}
+
+void cargarArchivo(Piece***& tablero){
+	try{
+		ifstream entrada;
+		entrada.open("Chess.chess", ios::in|ios::binary);
+		while(entrada.read((char *)&tablero, sizeof(Piece***)));
+		entrada.close();
+	}catch(...){
+		cerr<<"Ocurrió un error al cargar la partida."<<endl;
+	}
 }
